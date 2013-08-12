@@ -6,10 +6,30 @@
 
 #include <iostream>
 #include "console.h"
+#include "random.h"
+#include "vector.h"
 
 using namespace std;
 
-int main() {
-    cout << "hello world" << endl;
-    return 0;
+
+Vector<int> makeRandomVector(int sz)
+{
+	Vector<int> numbers;
+	for (int i = 0; i < sz; i++)
+		numbers.add(randomInteger(1, 100));
+	return numbers;
+}
+
+void printVector(Vector<int> &v)
+{
+	for (int i = 0; i < v.size(); i++)
+		cout << v[i] << " ";
+    cout << "" << endl;
+}
+
+int main()
+{
+	Vector<int> nums = makeRandomVector(10);
+	printVector(nums);
+	return 0;
 }
