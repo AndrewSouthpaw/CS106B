@@ -22,15 +22,16 @@ int main() {
     GWindow gw;
     drawDiamond(gw);
     GLine *line;
-    while (true) {
+    /*while (true) {
         GEvent e = waitForEvent(MOUSE_EVENT + KEY_EVENT);
         switch (e.getEventClass()) {
             case MOUSE_EVENT:
                 if (e.getEventType() == MOUSE_PRESSED) {
-                    line = new GLine(e.getX(), e.getY(), e.getX(), e.getY());
+                    line = new GLine(GMouseEvent(e).getX(), GMouseEvent(e).getY(),
+                                     GMouseEvent(e).getX(), GMouseEvent(e).getY());
                     gw.add(line);
                 } else if (e.getEventType() == MOUSE_DRAGGED) {
-                    line->setEndPoint(e.getX(), e.getY());
+                    line->setEndPoint(GMouseEvent(e).getX(), GMouseEvent(e).getY());
                 }
                 
                 break;
@@ -38,8 +39,10 @@ int main() {
                 drawRectangleAndOval(gw);
                 break;
         }
-    }
-    
+        
+    }*/
+    GMouseEvent e = waitForEvent();
+    if (e.getEventType() == MOUSE_CLICKED) drawRectangleAndOval(gw);
     
     return 0;
 }
