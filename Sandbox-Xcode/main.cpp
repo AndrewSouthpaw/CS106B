@@ -6,6 +6,8 @@
  */
 
 #include "gwindow.h"
+#include "gevents.h"
+#include "gobjects.h"
 
 using namespace std;
 
@@ -19,7 +21,26 @@ void drawRectangleAndOval(GWindow &gw);
 int main() {
     GWindow gw;
     drawDiamond(gw);
-    drawRectangleAndOval(gw);
+    GLine *line;
+    while (true) {
+        GEvent e = waitForEvent(MOUSE_EVENT + KEY_EVENT);
+        switch (e.getEventClass()) {
+            case MOUSE_EVENT:
+                if (e.getEventType() == MOUSE_PRESSED) {
+                    line = new GLine(e.getX(), e.getY(), e.getX(), e.getY());
+                    gw.add(line);
+                } else if (e.getEventType() == MOUSE_DRAGGED) {
+                    line->setEndPoint(e.getX(), e.getY());
+                }
+                
+                break;
+            case KEY_EVENT:
+                drawRectangleAndOval(gw);
+                break;
+        }
+    }
+    
+    
     return 0;
 }
 
