@@ -16,7 +16,9 @@ using namespace std;
 
 /* Function prototypes */
 string askUserForFile(ifstream &infile, string prompt = "");
-void readScoresFromFile(ifstream &infile, Vector<int> scores);
+Vector<int> readScoresFromFile(ifstream &infile);
+Vector<string> createHistogram(Vector<int> scores);
+void displayHistogram(Vector<string> &histogram);
 
 /* Main program */
 
@@ -24,11 +26,10 @@ int main() {
     cout << "This program produces a histogram from exam scores." << endl;
 	ifstream infile;
 	askUserForFile(infile, "Enter file name: ");
-	Vector<int> scores;
-	readScoresFromFile(infile, scores);
+	Vector<int> scores = readScoresFromFile(infile);
 	Vector<string> histogram = createHistogram(scores);
-//	displayHistogram(histogram);
-//	test.close();
+	displayHistogram(histogram);
+	infile.close();
 	return 0;
 }
 
@@ -60,20 +61,23 @@ string askUserForFile(ifstream &infile, string prompt) {
 
 /*
  * Function: readScoresFromFile
- * Usage: readScoresFromFile(infile, scores);
+ * Usage: readScoresFromFile(infile);
  * ------------------------------------------
  * Returns a vector of scores from a file of exam scores.
  */
 
-void readScoresFromFile(ifstream &infile, Vector<int> scores) {
+Vector<int> readScoresFromFile(ifstream &infile) {
+	Vector<int> scores;
 	while (true) {
 		string line;
 		getline(infile, line);
-		if (infile.fail()) break;
+		if (infile.fail()) break;	
 		int num = stringToInteger(line);
 		scores.add(num);
 	}
+	return scores;
 }
+
 
 
 /*
@@ -81,11 +85,39 @@ void readScoresFromFile(ifstream &infile, Vector<int> scores) {
  * Usage: Vector<string> hist = createHistogram(scores);
  * -----------------------------------------------------
  * Creates a histogram of equal sized buckets, 0 - 100, in ranges of 10,
- * i.e. 0-9, 10-19, 20-29, etc. Count is indicated with an 'x'.
+ * i.e. 0-9, 10-19, 20-29, etc. Count is indicated with an 'x' mark.
  */
 
 Vector<string> createHistogram(Vector<int> scores) {
-	
+	Vector<string> result;
+	for (int i = 0; i < 10; i++) {
+		result.add("");
+		for (int j = 0; j < scores.size(); j++) {
+			if (i == 0 && scores[j] < 10) {
+				result[i] += 'x';
+			} else if (scores[j] < (i + 1) * 10 &&
+					   scores[j] >= i * 10) {
+				result[i] += 'x';
+			}
+		}
+	}
+	return result;
+}
+
+
+/*
+ * Function: displayHistogram
+ * Usage: displayHistogram(hist);
+ * -------------------------------
+ * Displays a histogram in text base, using 'x' as an counter.
+ */
+
+void displayHistogram(Vector<string> &histogram) {
+	cout << "Printing histogram..." << endl;
+	for (int i = 0; i < histogram.size(); i++) {
+		cout << " " << (i * 10) << " - " << ((i * 10) + 9) << ": " <<
+			histogram[i] << endl;
+	}
 }
 
 
