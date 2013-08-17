@@ -1,8 +1,8 @@
 /*
  * File: main.cpp
  * --------------
- * Learning Strings, reading Ch 3.
- * Created: 2013-08-13
+ * Playing with file reading, searching, and collective nouns.
+ * Created: 2013-08-16
  */
 
 #include <iostream>
