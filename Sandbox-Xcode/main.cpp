@@ -7,6 +7,8 @@
 
 #include <iostream>
 #include <string>
+#include "simpio.h"
+#include "console.h"
 
 using namespace std;
 
@@ -16,11 +18,10 @@ using namespace std;
 /* Main program */
 
 int main() {
-    string name;
-    cout << "Enter your full name: ";
-    getline(cin, name);
-    cout << "Hello, " << name << "!" << endl;
-    return 0;
+    cout << "This program teaches you about collective nouns!" << endl;
+    cout << "Source: http://www.npwrc.usgs.gov/about/faqs/animals/names.htm" << endl;
+    cout << "What would you call a group of... ";
+    
 }
 
 /* This is interesting, because getline takes a stream. That stream
