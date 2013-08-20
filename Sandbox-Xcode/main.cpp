@@ -1,16 +1,22 @@
 /*
  * File: main.cpp
  * --------------
- * Reading on material from Chapter 3.
+ * Learning about Maps and Sets.
  */
 
 #include <string>
 #include <iostream>
 #include <cctype>
+#include <fstream>
+#include <iomanip>
 #include "console.h"
+#include "error.h"
 #include "simpio.h"
 #include "tokenscanner.h"
 #include "strlib.h"
+#include "map.h"
+#include "vector.h"
+#include "filelib.h"
 
 
 using namespace std;
@@ -20,100 +26,60 @@ using namespace std;
 
 /* Function prototypes */
 
-string lineToPigLatin(string line);
-string wordToPigLatin(string word);
-int findFirstVowel(string word);
-bool isVowel(char ch);
+void countWords(istream &stream, Map<string,int> &wordCounts);
+void displayWordCounts(Map<string,int> &wordCounts);
+void extractWords(string line, Vector<string> &words);
 
 /* Main program */
 
 int main() {
-    cout << "This program translates English to Pig Latin." << endl;
-    cout << "Enter English text: ";
-    string line = getLine();
-    string translation = lineToPigLatin(line);
-    cout << "Pig Latin output: " << translation << endl;
+    ifstream infile("CollectiveNouns.txt");
+    Map<string, int> wordCounts;
+    countWords(infile, wordCounts);
+    infile.close();
+    displayWordCounts(wordCounts);
     return 0;
 }
 
 
-/*
- * Function: lineToPigLatin
- * Usage: string translation = lineToPigLatin(line);
- * --------------------------------------------------
- * Translates word in line to Pig Latin, leaving other characters
- * unchanged.
- */
- 
-string lineToPigLatin(string line) {
-    string result = "";
-    TokenScanner scanner(line);
-    while (scanner.hasMoreTokens()) {
-        string token = scanner.nextToken();
-        if (isalpha(token[0])) {
-            result += wordToPigLatin(token);
-        } else {
-            result += token;
+
+void countWords(istream &stream, Map<string,int> &wordCounts) {
+    Vector<string> lines, words;
+    readEntireFile(stream, lines);
+    for (string line : lines) {
+        extractWords(line, words);
+        for (string word : words) {
+            wordCounts[toLowerCase(word)]++;
         }
     }
-    return result;
 }
 
-
-
-/*
- * Function: wordToPigLatin
- * Usage: string translation = wordToPigLatin(word);
- * -------------------------------------------------
- * Translates a word from English to Pig Latin using rules specified in text.
- */
-
-string wordToPigLatin(string word) {
-    int vp = findFirstVowel(word);
-    if (vp == -1) {
-        return word;
-    } else if (vp == 0) {
-        return word + "way";
-    } else {
-        string head = word.substr(0, vp);
-        string tail = word.substr(vp);
-        return tail + head + "ay";
+void displayWordCounts(Map<string,int> &wordCounts) {
+    for (string word : wordCounts) {
+        cout << left << setw(15) << word
+        << right << setw(5) << wordCounts[word] << endl;
     }
 }
 
 
 
-/*
- * Function: findFirstVowel
- * Usage: int vp = findFirstVowel(word);
- * --------------------------------------
- * Returns the location of the first vowel. Returns -1 if no vowel present.
- */
-
-int findFirstVowel(string word) {
-    for (int i = 0; i < word.length(); i++) {
-        if (isVowel(word[i])) return i;
+void extractWords(string line, Vector<string> &words) {
+    words.clear();
+    int start = -1;
+    for (int i = 0; i < line.length(); i++) {
+        if (isalpha(line[i])) {
+            if (start == -1) start = i;
+        } else {
+            if (start >= 0) {
+                words.add(line.substr(start, i - start));
+                start = -1;
+            }
+        }
     }
-    return -1;
+    if (start >= 0) words.add(line.substr(start));
 }
 
 
-/*
- * Function: isVowel
- * Usage: if (isVowel(ch)) ...
- * ----------------------------
- * Returns true fi the character ch is a vowel.
- */
-
-bool isVowel (char ch) {
-    switch (ch) {
-        case 'A': case 'E': case 'I': case 'O': case 'U':
-        case 'a': case 'e': case 'i': case 'o': case 'u':
-            return true;
-        default:
-            return false;
-    }
-}
 
 
 
