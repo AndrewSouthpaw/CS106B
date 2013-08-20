@@ -6,8 +6,12 @@
 
 #include <string>
 #include <iostream>
+#include <cctype>
 #include "console.h"
 #include "simpio.h"
+#include "tokenscanner.h"
+#include "strlib.h"
+
 
 using namespace std;
 
@@ -15,24 +19,106 @@ using namespace std;
 
 
 /* Function prototypes */
-string reverseWord(string str);
+
+string lineToPigLatin(string line);
+string wordToPigLatin(string word);
+int findFirstVowel(string word);
+bool isVowel(char ch);
 
 /* Main program */
 
 int main() {
-    string str = "desserts";
-    string rev = reverseWord(str);
-    cout << "Your word: " << rev << endl;
+    cout << "This program translates English to Pig Latin." << endl;
+    cout << "Enter English text: ";
+    string line = getLine();
+    string translation = lineToPigLatin(line);
+    cout << "Pig Latin output: " << translation << endl;
     return 0;
 }
 
-string reverseWord(string str) {
+
+/*
+ * Function: lineToPigLatin
+ * Usage: string translation = lineToPigLatin(line);
+ * --------------------------------------------------
+ * Translates word in line to Pig Latin, leaving other characters
+ * unchanged.
+ */
+ 
+string lineToPigLatin(string line) {
     string result = "";
-    for (int i = str.length() - 1; i >= 0; i--) {
-        result += str[i];
+    TokenScanner scanner(line);
+    while (scanner.hasMoreTokens()) {
+        string token = scanner.nextToken();
+        if (isalpha(token[0])) {
+            result += wordToPigLatin(token);
+        } else {
+            result += token;
+        }
     }
     return result;
 }
+
+
+
+/*
+ * Function: wordToPigLatin
+ * Usage: string translation = wordToPigLatin(word);
+ * -------------------------------------------------
+ * Translates a word from English to Pig Latin using rules specified in text.
+ */
+
+string wordToPigLatin(string word) {
+    int vp = findFirstVowel(word);
+    if (vp == -1) {
+        return word;
+    } else if (vp == 0) {
+        return word + "way";
+    } else {
+        string head = word.substr(0, vp);
+        string tail = word.substr(vp);
+        return tail + head + "ay";
+    }
+}
+
+
+
+/*
+ * Function: findFirstVowel
+ * Usage: int vp = findFirstVowel(word);
+ * --------------------------------------
+ * Returns the location of the first vowel. Returns -1 if no vowel present.
+ */
+
+int findFirstVowel(string word) {
+    for (int i = 0; i < word.length(); i++) {
+        if (isVowel(word[i])) return i;
+    }
+    return -1;
+}
+
+
+/*
+ * Function: isVowel
+ * Usage: if (isVowel(ch)) ...
+ * ----------------------------
+ * Returns true fi the character ch is a vowel.
+ */
+
+bool isVowel (char ch) {
+    switch (ch) {
+        case 'A': case 'E': case 'I': case 'O': case 'U':
+        case 'a': case 'e': case 'i': case 'o': case 'u':
+            return true;
+        default:
+            return false;
+    }
+}
+
+
+
+
+
 
 
 
