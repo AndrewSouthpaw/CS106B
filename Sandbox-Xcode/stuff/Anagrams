@@ -1,7 +1,7 @@
 /*
  * File: main.cpp
  * --------------
- * Learning about Maps and Sets.
+ * Learning about foreach and counted sorting.
  */
 
 #include <string>
@@ -17,7 +17,6 @@
 #include "map.h"
 #include "vector.h"
 #include "filelib.h"
-#include "lexicon.h"
 
 
 using namespace std;
@@ -34,7 +33,6 @@ string sortLetters(string s);
 
 int main() {
 
-    /* --- From first iteration ---
     cout << "This program checks if two words are anagrams." << endl;
     cout << "Enter first word: ";
     string w1 = getLine();
@@ -43,33 +41,6 @@ int main() {
     bool b = isAnagram(w1, w2);
     cout << "These words " << (b ? "are" : "are not") << " anagrams." << endl;
     return 0;
-       --- From first iteration --- */
-    
-    Lexicon words("EnglishWords.dat");
-    
-    /* Build a database of anagrams */
-    Map<string, Set<string> > anagrams;
-    foreach (string word in words) {
-        anagrams[sortLetters(word)] += word;
-    }
-    
-    while(true) {
-        
-        /* Read a word from the user */
-        cout << "Enter a word: ";
-        string word = toLowerCase(getLine());
-        if (word == "") break;
-        
-        /* Checks if it is a word, prints the anagrams if it is */
-        if (anagrams.containsKey(sortLetters(word))) {
-            foreach(string entry in anagrams[sortLetters(word)]) {
-                cout << entry << endl;
-            }
-        } else {
-            cout << "Sorry, that word is not recognized." << endl;
-        }
-        
-    }
     
 }
 
@@ -102,8 +73,13 @@ bool isAnagram(string w1, string w2) {
 
 string sortLetters(string s) {
     Map<char, int> m;
-    foreach (char ch in s) {
-        m[ch]++;
+    for (int i = 0; i < s.length(); i++) {
+        char ch = s[i];
+        if (m.containsKey(ch)) {
+            m[ch]++;
+        } else {
+            m[ch] = 1;
+        }
     }
     string result = "";
     foreach(char ch in m) {
