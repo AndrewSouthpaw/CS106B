@@ -26,63 +26,68 @@ using namespace std;
 
 /* Function prototypes */
 
-void countWords(istream &stream, Map<string,int> &wordCounts);
-void displayWordCounts(Map<string,int> &wordCounts);
-void extractWords(string line, Vector<string> &words);
+bool isAnagram(string w1, string w2);
+string sortLetters(string s);
 
 /* Main program */
 
 int main() {
-    ifstream infile("CollectiveNouns.txt");
-    Map<string, int> wordCounts;
-    countWords(infile, wordCounts);
-    infile.close();
-    displayWordCounts(wordCounts);
+
+    cout << "This program checks if two words are anagrams." << endl;
+    cout << "Enter first word: ";
+    string w1 = getLine();
+    cout << "Enter second word: ";
+    string w2 = getLine();
+    bool b = isAnagram(w1, w2);
+    cout << "These words " << (b ? "are" : "are not") << " anagrams." << endl;
     return 0;
+    
 }
 
 
+/*
+ * Function: isAnagram
+ * Usage: bool b = isAnagram(w1, w2);
+ * -------------------------------------
+ * Checks if two words are anagrams.
+ */
+ 
 
-void countWords(istream &stream, Map<string,int> &wordCounts) {
-    Vector<string> lines, words;
-    readEntireFile(stream, lines);
-    for (string line : lines) {
-        extractWords(line, words);
-        for (string word : words) {
-            wordCounts[toLowerCase(word)]++;
-        }
+bool isAnagram(string w1, string w2) {
+    string s1 = sortLetters(w1);
+    string s2 = sortLetters(w2);
+    if (s1 == s2) {
+        return true;
+    } else {
+        return false;
     }
 }
 
-void displayWordCounts(Map<string,int> &wordCounts) {
-    for (string word : wordCounts) {
-        cout << left << setw(15) << word
-        << right << setw(5) << wordCounts[word] << endl;
-    }
-}
 
+/*
+ * Function: sortLetters
+ * Usage: string str = sortLetters(string word);
+ * ------------------------------------------------
+ * Returns a string with the letters of the word sorted.
+ */
 
-
-void extractWords(string line, Vector<string> &words) {
-    words.clear();
-    int start = -1;
-    for (int i = 0; i < line.length(); i++) {
-        if (isalpha(line[i])) {
-            if (start == -1) start = i;
+string sortLetters(string s) {
+    Map<char, int> m;
+    for (int i = 0; i < s.length(); i++) {
+        char ch = s[i];
+        if (m.containsKey(ch)) {
+            m[ch]++;
         } else {
-            if (start >= 0) {
-                words.add(line.substr(start, i - start));
-                start = -1;
-            }
+            m[ch] = 1;
         }
     }
-    if (start >= 0) words.add(line.substr(start));
+    string result = "";
+    foreach(char ch in m) {
+        int num = m.get(ch);
+        result += string(num, ch);
+    }
+    return result;
 }
-
-
-
-
-
 
 
 
