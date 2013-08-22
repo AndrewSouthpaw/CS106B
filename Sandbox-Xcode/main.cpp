@@ -24,98 +24,32 @@ using namespace std;
 
 /* Constants */
 
+static const int COLUMNS = 7;
 
 /* Function prototypes */
 
-bool isAnagram(string w1, string w2);
-string sortLetters(string s);
+
 
 /* Main program */
 
 int main() {
-
-    /* --- From first iteration ---
-    cout << "This program checks if two words are anagrams." << endl;
-    cout << "Enter first word: ";
-    string w1 = getLine();
-    cout << "Enter second word: ";
-    string w2 = getLine();
-    bool b = isAnagram(w1, w2);
-    cout << "These words " << (b ? "are" : "are not") << " anagrams." << endl;
-    return 0;
-       --- From first iteration --- */
-    
-    Lexicon words("EnglishWords.dat");
-    
-    /* Build a database of anagrams */
-    Map<string, Set<string> > anagrams;
-    foreach (string word in words) {
-        anagrams[sortLetters(word)] += word;
-    }
-    
-    while(true) {
-        
-        /* Read a word from the user */
-        cout << "Enter a word: ";
-        string word = toLowerCase(getLine());
-        if (word == "") break;
-        
-        /* Checks if it is a word, prints the anagrams if it is */
-        if (anagrams.containsKey(sortLetters(word))) {
-            foreach(string entry in anagrams[sortLetters(word)]) {
-                cout << entry << endl;
-            }
-        } else {
-            cout << "Sorry, that word is not recognized." << endl;
-        }
-        
-    }
-    
+	
+	Vector<int> letterCounts(26);
+	ifstream infile;
+	promptUserForFile(infile, "Input file: ");
+	char ch;
+	while (infile.get(ch)) {
+		if (isalpha(ch) ) {
+			letterCounts[toupper(ch) - 'A']++;
+		}
+	}
+	infile.close();
+	for (char ch = 'A'; ch <= 'Z'; ch++) {
+		cout << setw(COLUMNS) << letterCounts[ch - 'A'] << " " << ch << endl;
+	}
+	return 0;
+	
 }
-
-
-/*
- * Function: isAnagram
- * Usage: bool b = isAnagram(w1, w2);
- * -------------------------------------
- * Checks if two words are anagrams.
- */
- 
-
-bool isAnagram(string w1, string w2) {
-    string s1 = sortLetters(w1);
-    string s2 = sortLetters(w2);
-    if (s1 == s2) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-
-/*
- * Function: sortLetters
- * Usage: string str = sortLetters(string word);
- * ------------------------------------------------
- * Returns a string with the letters of the word sorted.
- */
-
-string sortLetters(string s) {
-    Map<char, int> m;
-    foreach (char ch in s) {
-        m[ch]++;
-    }
-    string result = "";
-    foreach(char ch in m) {
-        int num = m.get(ch);
-        result += string(num, ch);
-    }
-    return result;
-}
-
-
-
-
 
 
 
