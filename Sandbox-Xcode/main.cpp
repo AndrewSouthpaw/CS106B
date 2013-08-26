@@ -35,16 +35,36 @@ using namespace std;
 /* Main program */
 
 int main() {
-	ifstream infile;
-	infile.open("sample.txt");
-	ofstream outfile;
-	char ch;
-	while (infile.get(ch)) {
-		outfile.put(ch);
+	int stringToInteger(string str) {
+		istringstream stream(str);
+		int value;
+		stream >> value >> ws;
+		if (stream.fail() || !stream.eof()) {
+			error("stringToInteger: Illegal integer format");
+		}
+		return value;
 	}
-	cout << endl;
-	infile.close();
-	return 0;
+	
+	
+	string integerToString(int n) {
+		ostringstream stream;
+		stream << n;
+		return stream.str();
+	}
+	
+	int getInteger(string prompt) {
+		int value;
+		string line;
+		while (true) {
+			cout << prompt;
+			getline(cin, line);
+			istringstream stream(line);
+			stream >> value >> ws;
+			if (!stream.fail() && stream.eof()) break;
+			cout << "Illegal integer format. Try again." << endl;
+		}
+		return value;
+	}
 }
 
 
