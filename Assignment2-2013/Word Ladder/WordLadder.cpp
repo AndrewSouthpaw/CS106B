@@ -1,10 +1,11 @@
 /*
  * File: WordLadder.cpp
  * ----------------------
- * Name: [TODO: enter name here]
- * Section: [TODO: enter section leader here]
+ * Name: Andrew Smith
  * This file is the starter project for the Word Ladder problem.
- * [TODO: rewrite the documentation]
+ * 
+ *
+ *
  */
 
 #include <iostream>
@@ -12,6 +13,6 @@
 using namespace std;
 
 int main() {
-    // [TODO: fill in the code]
-    return 0;
+	// [TODO: fill in the code]
+	return 0;
 }
