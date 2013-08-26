@@ -35,16 +35,16 @@ using namespace std;
 /* Main program */
 
 int main() {
-	Lexicon words("EnglishWords.dat");
-	test();
-}
-
-
-void test() {
-	string testWord = "people";
-	if (words.contains(testWord)) {
-		cout << testWord << " is a word." << endl;
-	} else {
-		cout << testWord << " is not a word." << endl;
+	ifstream infile;
+	infile.open("sample.txt");
+	ofstream outfile;
+	char ch;
+	while (infile.get(ch)) {
+		outfile.put(ch);
 	}
+	cout << endl;
+	infile.close();
+	return 0;
 }
+
+
