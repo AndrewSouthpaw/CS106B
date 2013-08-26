@@ -15,6 +15,7 @@
 #include "map.h"
 #include "vector.h"
 #include "error.h"
+#include "random.h"
 using namespace std;
 
 /* Constants */
@@ -25,7 +26,8 @@ const int TEXT_LENGTH = 2000;	// Length of the random writer output
 
 string askUserForFile(ifstream &infile, string prompt);
 Map<string, Vector<char> > analyzeSourceText(ifstream &infile, int order);
-
+void writeRandomText(Map<string, Vector<char> > &seeds, int textLength);
+string mostFrequentSeed(Map<string, Vector<char> > &seeds);
 
 
 
@@ -41,6 +43,7 @@ int main() {
 	while (true) {
 		order = getInteger("Enter Markov order [1-10]: ");
 		if (order >= 1 && order <= 10) break;
+		break;
 		cout << "Please enter an order between 1 and 10." << endl;
 	}
 
@@ -48,17 +51,7 @@ int main() {
 	cout << "Analyzing file..." << endl;
 	Map<string, Vector<char> > seeds = analyzeSourceText(infile, order);
 	
-//	/* Print out source file analysis */
-//	for (string seed : seeds) {
-//		string str;
-//		str += seed + ": ";
-//		Vector<char> letters = seeds.get(seed);
-//		for (char ch : letters) {
-//			str += ch;
-//		}
-//		cout << str << endl;
-//	}
-
+	/* Print out random text based on seed analysis */
 	cout << "Writing random text..." << endl;
 	writeRandomText(seeds, TEXT_LENGTH);
 	
@@ -139,25 +132,67 @@ Map<string, Vector<char> > analyzeSourceText(ifstream &infile, int order) {
  * ------------------------------------------
  * Writes random text based off a Markov model using a sample file that provides
  * seeds (and associated probabilities of characters) for random character 
- * generation.
+ * generation. If it reaches a situation where there are no characters to pull
+ * from, it stops writing early.
  */
 
 
-/* Pseudocode
- 
- Pull the most commonly occurring seed
- Print the seed
- while (printout < textLength) {
-	randomly select a char based on the seed
-	print the char
-	update the textLength count
-	update the seed
- 
- */
-
-
-void writeRandomText(Map<string, Vector<char> > seeds, int textLength) {
+void writeRandomText(Map<string, Vector<char> > &seeds, int textLength) {
 	
+	int count = 0;
+	/* Find the most commonly occurring seed and print it */
+	string seed = mostFrequentSeed(seeds);
+	count += seed.length();
+	cout << seed;
+	
+	while (count < textLength) {
+		Vector<char> letters = seeds.get(seed); // Pull letters for the seed
+		if (letters.size() == 0) break; // Stop if no chars to choose from
+
+		/* Randomly select character to print, update count and seed */
+		int num = randomInteger(0, letters.size() - 1);
+		cout.put(letters[num]);
+		count++;
+		seed = seed.substr(1) + letters[num];
+	}
+	
+	/* Print out the results */
+	cout << endl;
+
+}
+
+
+
+
+
+/*
+ * Function: mostFrequentSeed
+ * Usage: string seed = mostFrequentSeed(seeds);
+ * ---------------------------------------------
+ * Returns the most commonly occurring seed in a Map of seeds containing the
+ * Vector of chars that followed the seed. If there are multiple seeds of
+ * equal maximum occurrence, one is chosen randomly.
+ */
+
+string mostFrequentSeed(Map<string, Vector<char> > &seeds) {
+	Vector<string> mostFrequentSeeds;
+	int freq = 0;
+
+	/* Extract the most frequent seeds */
+	for (string seed : seeds) {
+		Vector<char> letters = seeds.get(seed);
+		if (letters.size() > freq) {
+			mostFrequentSeeds.clear();
+			mostFrequentSeeds.add(seed);
+			freq = letters.size();
+		} else if (letters.size() == freq) {
+			mostFrequentSeeds.add(seed);
+		}
+	}
+	
+	/* Return one of the most frequent seeds with equal probability */
+	int num = randomInteger(0, mostFrequentSeeds.size() - 1);
+	return mostFrequentSeeds[num];
 }
 
 
