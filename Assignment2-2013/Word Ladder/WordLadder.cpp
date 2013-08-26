@@ -52,7 +52,7 @@ int main() {
 		if (start.length() != end.length()) {
 			cout << "Word lengths do not match! Please try again." << endl;
 			
-			/* Search for word ladder */
+		/* Search for word ladder */
 		} else {
 			cout << "Searching..." << endl;
 			
@@ -64,7 +64,7 @@ int main() {
 				
 				/* Print out the ladder */
 			} else {
-				string result;
+				string result = "Ladder found: ";
 				for (int i = 0; i < shortest.size(); i++) {
 					if (i != 0) result += " -> ";
 					result += shortest[i];
@@ -87,30 +87,6 @@ int main() {
  * length. If no ladder is found, an empty vector is returned. A lexicon of
  * words is used.
  */
-
-
-
-/* Pseudocode
- 
- Create an empty queue.
- Add the start word to the end of the queue. 
- while (the queue is not empty) {
-	Dequeue the first ladder from the queue.
-	if (the final word in this ladder is the destination word){
-		Return this ladder as the solution.
-	}
-	for (each word in the lexicon of English words that differs by one letter){
-		if (that word has not already been used in a ladder) { 
-			Create a copy of the current ladder.
-			Add the new word to the end of the copy.
-			Add the new ladder to the end of the queue.
-			}
-		}
-	}
- Report that no word ladder exists.
- 
- */
-
 
 Vector<string> findShortestLadder(Lexicon &words, string start, string end) {
 
