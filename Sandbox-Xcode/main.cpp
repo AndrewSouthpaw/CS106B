@@ -34,7 +34,8 @@ using namespace std;
 
 /* Main program */
 
-//--- Point class interface ---
+--- Point class interface ---
+
 /*
  * File: point.h
  * -------------
@@ -42,57 +43,88 @@ using namespace std;
  * a two-dimensional integer grid.
  * (c) Eric Roberts, "Programming Abstractions in C++", 2013, p.269
  */
- 
- #ifndef _point_h
- #define _point_h
- 
- #include <string>
- 
- class point {
- public:
- 
- /*
- * Constructor: Point
- * Usage: Point origin;
- *        Point pt(xc, yc);
- * ------------------------
- * Creates a Point object. Default constructor sets coordinates to 0,
- * the second form sets the coordinates to xc and yc.
- */
-Point();
-Point (int xc, int yc);
 
-/*
- * Methods: getX, getY
- * Usage: int x = pt.getX();
- *        int y = pt.getY();
- * -------------------------
- * These methods return the x and y coordinates of the point.
- */
+#ifndef _point_h
+#define _point_h
 
-int getX();
-int getY();
+#include <string>
 
-/*
- * Method: toString
- * Usage: string str = pt.toString();
- * ----------------------------------
- * Returns a string expression of the Point in the form "(x,y)".
- */
-
-std::string toString();
-
+class point {
+public:
+	
+	/*
+	 * Constructor: Point
+	 * Usage: Point origin;
+	 *        Point pt(xc, yc);
+	 * ------------------------
+	 * Creates a Point object. Default constructor sets coordinates to 0,
+	 * the second form sets the coordinates to xc and yc.
+	 */
+	Point();
+	Point (int xc, int yc);
+	
+	/*
+	 * Methods: getX, getY
+	 * Usage: int x = pt.getX();
+	 *        int y = pt.getY();
+	 * -------------------------
+	 * These methods return the x and y coordinates of the point.
+	 */
+	
+	int getX();
+	int getY();
+	
+	/*
+	 * Method: toString
+	 * Usage: string str = pt.toString();
+	 * ----------------------------------
+	 * Returns a string expression of the Point in the form "(x,y)".
+	 */
+	
+	std::string toString();
+	
+	/* Friend declaration */
+	
+	friend bool operator==(Point p1, Point p2);
+	
 private:
-int x;		/* The x-coordinate */
-int y;		/* The y-coordinate */
+	int x;		/* The x-coordinate */
+	int y;		/* The y-coordinate */
 };
+
+/*
+ * Operator: <<
+ * Usage: cout << pt;
+ * ------------------
+ * Overloads the << operator so that it is able to display Point values.
+ */
+
+std:ostream & operator<<(std::ostream &os, Point pt);
+
+/*
+ * Operator: ==
+ * Usage: p1 == p2
+ * ---------------
+ * This operator supports equality testing for points.
+ */
+
+bool operator==(Point p1, Point p2);
+
+/*
+ * Operator: !=
+ * Usage: p1 != p2;
+ * ----------------
+ * This operator implements the != operator for points.
+ */
+
+bool operator!=(Point p1, Point p2);
 
 #endif
 
 
 
 
-//--- Point class implementation ---
+--- Point class implementation ---
 /*
  * File: point.cpp
  * ----------------
@@ -147,4 +179,16 @@ Point::Point() {
 	string Point::toString() {
 		return "(" + integerToString(x) + ","
 		+ integerToString(y) + ")";
+	}
+	
+	bool operator==(Point p1, Point p2) {
+		return p1.x == p2.x && p1.y == p2.y;
+	}
+	
+	bool operator!=(Point p1, Point p2) {
+		return !(p1 == p2);
+	}
+	
+	ostream & operator<<(ostream &os, Point pt) {
+		return os << pt.toString();
 	}
