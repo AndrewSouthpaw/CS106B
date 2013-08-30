@@ -34,17 +34,14 @@ using namespace std;
 
 
 
-bool solveSudoku(Grid<int> &grid) {
-	int row, col;
+bool dumbSolve(puzzleT puzzle, string lettersToAssign) {
+	if (lettersToAssign == "")
+		return puzzleSolved(puzzle);
 	
-	if (!findUnassignedLocation(grid, row, col)) {
-		return true; 	// all locations successfully assigned
-	}
-	for (int num = 1; num <= 9; num++) {
-		if (noConflicts(grid, row, col, num)) {
-			grid(row, col) = num;
-			if (solveSudoku(grid)) return true;
-			grid(row, col) = UNASSIGNED;
+	for (int digit = 0; digit <= 9; digit++) {
+		if(assignLetter(lettersToAssign[0], digit)) {
+			if (dumbSolve(puzzle, lettersToAssign.substr(1))) return true;
+			unassignLetter(lettersToAssign[0], digit);
 		}
 	}
 	return false;
