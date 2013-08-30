@@ -32,14 +32,20 @@ using namespace std;
 
 
 
-/* Main program */
 
-/* Tower of Brahma solution */
 
-void moveTower(int n, char src, char dst, char tmp) {
-	if (n > 0) {
-		moveTower(n-1, src, tmp, dst);
-		moveSingleDisc(src, dst);
-		moveTower(n-1, tmp, dst, src);
+bool solveSudoku(Grid<int> &grid) {
+	int row, col;
+	
+	if (!findUnassignedLocation(grid, row, col)) {
+		return true; 	// all locations successfully assigned
 	}
+	for (int num = 1; num <= 9; num++) {
+		if (noConflicts(grid, row, col, num)) {
+			grid(row, col) = num;
+			if (solveSudoku(grid)) return true;
+			grid(row, col) = UNASSIGNED;
+		}
+	}
+	return false;
 }
