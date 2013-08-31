@@ -28,7 +28,8 @@ int main() {
 
 
 
-/* Function: numPathsHome
+/* 
+ * Function: numPathsHome
  * Usage: int paths = numPathsHome(street, avenue);
  * ------------------------------------------------
  * Given a street number and avenue number, which are 1-indexed,
@@ -55,5 +56,23 @@ int main() {
 int numPathsHome(int street, int avenue) {
 	int paths = 0;
 	
-	return paths;
+	/* Base case: Karel is at 1st Street & 1st Avenue */
+	if (street == 1 && avenue == 1) return paths;
+
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
