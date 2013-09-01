@@ -37,27 +37,17 @@ int main() {
  * moves left or down.
  */
 
-/*
- * Reasoning through the recursive formula
- 
- At each junction, choose to go down or left if it is clear
- It is clear if street > 1 || avenue > 1
- Base case: street == 1 && avenue == 1
- Have a counter to track the number of different paths taken
- 
- How to set up the counter?
- If only one option is available, it is not a new path (should have been
- counted previously). If both are available, then one "new" path is created.
- 
- Could do it with a series of if / else ifs. But is that the most elegant?
- Well, give it a shot and see where it takes you.
- */
 
 int numPathsHome(int street, int avenue) {
-	int paths = 0;
 	
-	/* Base case: Karel is at 1st Street & 1st Avenue */
-	if (street == 1 && avenue == 1) return paths;
+	/* Base case 1: invalid location, no paths to home */
+	if (street < 1 || avenue < 1) return 0;
+	
+	/* Base case 2: at origin, path is complete */
+	if (street == 1 && avenue == 1) return 1;
+	
+	/* Recur step: try both paths */
+	return numPathsHome(street - 1, avenue) + numPathsHome(street, avenue - 1);
 
 	
 }
