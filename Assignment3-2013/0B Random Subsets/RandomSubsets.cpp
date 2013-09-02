@@ -1,11 +1,11 @@
 /*
  * File: RandomSubsets.cpp
  * ----------------------
- * Name: [TODO: enter name here]
- * Section: [TODO: enter section leader here]
+ * Name: Andrew Smith
  * This file is the starter project for the Random Subsets problem
  * on Assignment #3.
- * [TODO: extend the documentation]
+ *
+ * [To do: fill in documentation
  */
 
 #include <iostream>
@@ -20,6 +20,6 @@ using namespace std;
 Set<int> randomSubsetOf(Set<int>& s);
 
 int main() {
-    // [TODO: fill with your code]
+	
     return 0;
 }
