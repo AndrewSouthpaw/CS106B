@@ -13,7 +13,25 @@
 
 using namespace std;
 
+
+/* Constants */
+const int SENTINEL = 0;
+
+
 int main() {
+	
+	/* Get set of weights from user */
+	Vector<int> weights;
+	cout << "Enter the set of weights. (Enter " << SENTINEL << " to exit)" << endl;
+	while (true) {
+		int wt = getInteger("?: ");
+		if (wt == SENTINEL) break;
+		if (wt < 1) {
+			cout << "Invalid weight. Please try again." << endl;
+		} else {
+			weights.add(wt);
+		}
+	}
 	
     return 0;
 }
