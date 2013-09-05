@@ -18,7 +18,7 @@ using namespace std;
 const int SENTINEL = 0;
 
 /* Function prototypes */
-
+bool isMeasureable(int wt, Vector<int> weights);
 
 
 int main() {
@@ -64,22 +64,6 @@ int main() {
 
 bool isMeasureable(int wt, Vector<int> weights) {
 	
-	/* Suppose the weight to be measured is always on the left pan.
-	 * Each weight in the set can be included on the left pan, right pan,
-	 * or neither.
-	 * Base case reached when the weight on the left equals the set of weights
-	 * remaining, or when there are no weights left to be considered.
-	 * But how to store where the weight is located?!
-	 * Do you add it to the wt and remove it from the weights set? Yes.
-	 * So there are two branches? One where the setWt is added to wt and removed
-	 * from set, and one where it's just removed?
-	 * Almost, but there's an issue with ordering with that strategy. If it is
-	 * either added to wt or removed, there's no time when the 1st and last
-	 * setWt elements would be tested together.
-	 * So that would be a permutation issue.
-	 * I think that would do it, but it might get messy.
-	 */
-	
 	/* Base case: weight to be measured equals remaining weights in set */
 	int sum = 0;
 	for (int n : weights) {
@@ -90,11 +74,13 @@ bool isMeasureable(int wt, Vector<int> weights) {
 	if (sum == 0) {
 		return false;
 	} else {
-		for (int i = 0; i < weights.size(); i++) {
+		for (int i = 0; i < weights.size();) {
 			int next = weights[i];
-			isMeasureable(wt + next)
+			weights.remove(i);
+			if (isMeasureable(wt + next, weights) || isMeasureable(wt, weights)) return true;
 		}
 	}
+	return false;
 	
 	
 }
