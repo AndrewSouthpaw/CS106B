@@ -1,8 +1,8 @@
 /*
- * File: fillRegion.cpp
+ * File: MultiWordAnagrams.cpp
  * -------------------------------------
- * Fills a region of white pixels bounded by black pixels with black pixels.
- * In this simulation, pixels are bools; white is FALSE, black is TRUE.
+ * Generates multi-word anagrams from an input by user. If no anagram exists,
+ * the program states as such.
  */
 
 #include <iostream>
@@ -10,38 +10,29 @@
 #include "simpio.h"
 #include "vector.h"
 #include "grid.h"
+#include "lexicon.h"
 
 using namespace std;
 
 
-void fillRegion(Grid<bool> &pixels, int row, int col) {
-	/* Base case: Row or column is off the grid */
-	if (row >= pixels.numRows() || col >= pixels.numCols()) {
-		return;
-	}
+/* Constants */
+const int MIN_WORD_SIZE = 2;
+
+
+/* Function prototypes */
+
+
+/* Main program */
+
+int main() {
+
+	Lexicon english("EnglishWords.dat");
 	
-	/* Base case 2: A black pixel is reached */
-	if (pixels[row][col] == true) {
-		return;
-	}
+	cout << "This program produces multi-word anagrams." << endl;
+	cout << "Minimum word length: " << MIN_WORD_SIZE << endl;
 	
-	pixels[row][col] = true;
-	fillRegion(pixels, row + 1, col);
-	fillRegion(pixels, row - 1, col);
-	fillRegion(pixels, row, col + 1);
-	fillRegion(pixels, row, col - 1);
+	return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
