@@ -13,10 +13,20 @@
 using namespace std;
 
 
+/*
+ * Function: scrubInput
+ * Usage: string clean = scrubInput(line);
+ * ---------------------------------------
+ * Scrubs the line of spaces and punctuation.
+ */
 
+string scrubInput(string line) {
+	string result;
+
+}
 
 int main() {
-	Vector<int> v;
-	v += 1, 2, 3;
-
+	string result;
+	result += "hello";
+	cout << result << endl;
 }
