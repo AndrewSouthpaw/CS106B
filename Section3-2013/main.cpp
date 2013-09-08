@@ -16,13 +16,15 @@ using namespace std;
 
 
 /* Constants */
-const int MIN_WORD_SIZE = 2;
+const int MIN_WORD_SIZE = 3;
 const string LEXICON_FILE_NAME = "EnglishWords.dat";
 
 
 /* Function prototypes */
 bool findAnagram(string letters, Lexicon &english, Vector<string> &words);
 string scrubInput(string line);
+bool findAnagramWithPrefix(string prefix, string rest,
+						   Lexicon &english, Vector<string> &words);
 
 /* Main program */
 
@@ -40,7 +42,7 @@ int main() {
 		if (findAnagram(scrubInput(line), english, words)) {
 			cout << "An anagram exists." << endl;
 			for (string word : words) {
-				cout << word;
+				cout << word << " ";
 			}
 			cout << endl;
 		} else {
@@ -90,46 +92,35 @@ string scrubInput(string line) {
  */
 
 bool findAnagram(string letters, Lexicon &english, Vector<string> &words) {
-	
-	/* Base case: no letters remaining */
-	if (letters == "") {
-		string result = words[0];
-		words.remove(0);
-		if (isAllWords(result, english, words)) return true;
-		return false;
-	} else {
-		for (int i = 0; i < letters.size(); i++) {
-			words[0] += letters[i];
-			string remaining = letters.substr(0, i) + letters.substr(i+1);
-			if (findAnagram(remaining, english, words)) return true;
-		}
-	}
+	return findAnagramWithPrefix("", letters, english, words);
 }
 
 
 /*
- * Function: isAllWords
- * Usage: if (isAllWords(string, english, words);
- * ----------------------------------------------
- * Returns whether the string contains all words recognized in the Lexicon. 
- * The string is all letters with no spaces or punctuation. The string is
- * separated into words and passed back into the vector "words."
+ * Function: findAnagramWithPrefix
+ * Usage: findAnagramWithPrefix("", letters, english, words);
+ * ----------------------------------------------------------
+ * Finds a multiword anagram for a set of letter, where the current word
+ * must begin with the specified prefix.
  */
 
-bool isAllWords(string letters, Lexicon &english, Vector<string> &words) {
-	
-	/* Base case: no letters remaining */
-	if (letters == "") {
-		
+bool findAnagramWithPrefix(string prefix, string rest,
+						   Lexicon &english, Vector<string> &words) {
+	if (!english.containsPrefix(prefix)) return false;
+	if (english.contains(prefix) && prefix.length() >= MIN_WORD_SIZE) {
+		if (rest == "" || findAnagram(rest, english, words)) {
+			words.add(prefix);
+			return true;
+		}
 	}
+	for (int i = 0; i < rest.size(); i++) {
+		string otherLetters = rest.substr(0, i) + rest.substr(i+1);
+		if (findAnagramWithPrefix(prefix + rest[i], otherLetters, english, words)) {
+			return true;
+		}
+	}
+	return false;
 }
-
-
-
-
-
-
-
 
 
 
