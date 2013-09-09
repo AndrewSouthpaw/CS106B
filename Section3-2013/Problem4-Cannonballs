@@ -23,7 +23,6 @@ using namespace std;
 /* Function prototypes */
 int cannonball(int height);
 
-
 /* Main program */
 
 int main() {
