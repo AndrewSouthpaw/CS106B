@@ -1,10 +1,19 @@
 /*
- * File: Problem6_2009_GCD.cpp
+ * File: Problem8_2009_ListMnemonics.cpp
  * -------------------------------------
- * Computes the greatest common denominator using Euclid's method:
- * If x is evenly divisible by y, then y is the greatest common divisor. 
- * Otherwise, the greatest common divisor of x and y is always equal to the 
- * greatest common divisor of y and the remainder of x divided by y.
+ * A Touch-Tone phone has letters mapped to numbers for a phone dial.
+ * A business can use a mnemonic of their numbers that spell out a memorable
+ * word or set of words.
+ * 1 - 
+ * 2 - ABC
+ * 3 - DEF
+ * 4 - GHI
+ * 5 - JKL
+ * 6 - MNO
+ * 7 - PQRS
+ * 8 - TUV
+ * 9 - WXYZ
+ * This file lists all the mnemonics possible given a number combination.
  */
 
 #include <iostream>
@@ -21,7 +30,7 @@ using namespace std;
 
 
 /* Function prototypes */
-int gcd(int x, int y);
+void listMnemonics(string nums);
 
 
 /* Main program */
@@ -29,27 +38,30 @@ int gcd(int x, int y);
 int main() {
 
 	while (true) {
-		int x = getInteger("x = ");
-		int y = getInteger("y = ");
-		int num = gcd(x, y);
-		cout << "GCD: " << num << endl;
+		string nums = getLine("Enter number combination: ");
+		if (nums == "") break;
+		listMnemonics(nums);
 	}
 	return 0;
 }
 
 
 /*
- * Function: gcd
- * Usage: int num = gcd(x, y);
+ * Function: listMnemonics
+ * Usage: listMnemonics(nums);
  * ---------------------------
- * Recursively computes the greatest common denominator using Euclid's method.
- * 
+ * Lists all the mnemonics possible on a Touch-Tone phone mapping given
+ * a string of numbers.
  */
 
-int gcd(int x, int y) {
-	if (x % y == 0) return y;
-	return gcd(y, x % y);
+void listMnemonics(string nums) {
+	
 }
+
+
+
+
+
 
 
 
