@@ -57,7 +57,7 @@ int main() {
 void listMnemonics(string nums) {
 	
 	// use enums??
-	
+	// still struggling with this one...
 }
 
 
