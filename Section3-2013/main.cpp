@@ -58,6 +58,9 @@ void listMnemonics(string nums) {
 	
 	// use enums??
 	// still struggling with this one...
+	// idea: use switch and add +1 three times
+	// That's no good. Not recursive...
+	
 }
 
 
