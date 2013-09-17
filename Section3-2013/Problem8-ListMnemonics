@@ -14,7 +14,6 @@
  * 8 - TUV
  * 9 - WXY
  * This file lists all the mnemonics possible given a number combination.
- * Used help from solutions.
  */
 
 #include <iostream>
