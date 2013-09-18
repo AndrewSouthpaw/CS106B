@@ -1,0 +1,11 @@
+eclipse.preferences.version=1
+environment/project/cdt.managedbuild.config.gnu.macosx.exe.debug.327819531/Path/delimiter=\:
+environment/project/cdt.managedbuild.config.gnu.macosx.exe.debug.327819531/Path/operation=append
+environment/project/cdt.managedbuild.config.gnu.macosx.exe.debug.327819531/Path/value=${env_var\:Path};${workspace_loc\:/Users/andrewsouthpaw/Documents/workspace/CS106B/Section3-2013/StanfordCPPLib}
+environment/project/cdt.managedbuild.config.gnu.macosx.exe.debug.327819531/append=true
+environment/project/cdt.managedbuild.config.gnu.macosx.exe.debug.327819531/appendContributed=true
+environment/project/cdt.managedbuild.config.macosx.exe.release.1682565690/Path/delimiter=\:
+environment/project/cdt.managedbuild.config.macosx.exe.release.1682565690/Path/operation=append
+environment/project/cdt.managedbuild.config.macosx.exe.release.1682565690/Path/value=${env_var\:Path};${workspace_loc\:/Users/andrewsouthpaw/Documents/workspace/CS106B/Section3-2013/StanfordCPPLib}
+environment/project/cdt.managedbuild.config.macosx.exe.release.1682565690/append=true
+environment/project/cdt.managedbuild.config.macosx.exe.release.1682565690/appendContributed=true

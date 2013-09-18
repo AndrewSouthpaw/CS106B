@@ -1,0 +1,6 @@
+15:47:14 **** Incremental Build of configuration Debug for project Hello5Cross ****
+make all 
+make: Nothing to be done for `all'.
+
+15:47:14 Build Finished (took 209ms)
+

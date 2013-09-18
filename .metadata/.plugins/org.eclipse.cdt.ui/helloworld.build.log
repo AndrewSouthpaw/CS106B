@@ -1,5 +1,9 @@
+15:26:34 **** Build of configuration Debug for project HelloWorld ****
+make all 
+Cannot run program "make": Unknown reason
 
-**** Build of configuration Debug for project helloworld ****
+Error: Program "make" not found in PATH
+PATH=[/usr/bin:/bin:/usr/sbin:/sbin]
 
+15:26:34 Build Finished (took 42ms)
 
-(Cannot run program "make": Unknown reason)

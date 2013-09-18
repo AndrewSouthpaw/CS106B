@@ -1,0 +1,12 @@
+17:36:14 **** Incremental Build of configuration Debug for project Hello4 ****
+make all 
+Building target: Hello4
+Invoking: MacOS X C++ Linker
+g++ -L/Users/andrewsouthpaw/Documents/workspace/CS106B/Section3-2013/StanfordCPPLib -o "Hello4"  ./src/Hello4.o   -lStanfordCPPLib
+ld: warning: ignoring file /Users/andrewsouthpaw/Documents/workspace/CS106B/Section3-2013/StanfordCPPLib/libStanfordCPPLib.a, file was built for archive which is not the architecture being linked (x86_64): /Users/andrewsouthpaw/Documents/workspace/CS106B/Section3-2013/StanfordCPPLib/libStanfordCPPLib.a
+Undefined symbols for architecture x86_64:
+  "getInteger(std::basic_string<char, std::char_traits<char>, std::allocator<char> >)", referenced from:
+      _main in Hello4.o
+ld: symbol(s) not found for architecture x86_64
+collect2: ld returned 1 exit status
+make: *** [Hello4] Error 1

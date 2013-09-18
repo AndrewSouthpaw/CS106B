@@ -23,3 +23,15 @@ int main() {
 	
     return 0;
 }
+
+
+/*
+ * Function: randomSubsetOf
+ * Usage: set = randomSubsetOf(masterSet);
+ * ---------------------------------------
+ * Returns a uniformly-random subset of the master set.
+ */
+
+Set<int> randomSubsetOf(Set<int> &s) {
+	
+}
