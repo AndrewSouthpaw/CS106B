@@ -1,11 +1,9 @@
 /*
  * File: Subsequences.cpp
  * ----------------------
- * Name: [TODO: enter name here]
- * Section: [TODO: enter section leader here]
- * This file is the starter project for the Subsequences problem
- * on Assignment #3.
- * [TODO: extend the documentation]
+ * Name: Andrew Smith
+ *
+ * 
  */
 
 #include <iostream>
