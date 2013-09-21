@@ -2,10 +2,8 @@
  * File: RandomSubsets.cpp
  * ----------------------
  * Name: Andrew Smith
- * This file is the starter project for the Random Subsets problem
- * on Assignment #3.
  *
- * [To do: fill in documentation
+ * Produces a uniformly-random subset of a given set.
  */
 
 #include <iostream>
@@ -14,13 +12,26 @@
 #include "console.h"
 using namespace std;
 
+
+const int SENTINEL = 0;
+
 /* Given a set of integers, returns a uniformly-random subset of that
  * set.
  */
 Set<int> randomSubsetOf(Set<int>& s);
 
 int main() {
-	
+	Set<int> nums;
+	cout << "Enter a set of numbers: (" << SENTINEL << " to exit.)" << endl;
+	while (true) {
+		int n = getInteger("?: ");
+		if (n == SENTINEL) break;
+		nums.add(n);
+	}
+	Set<int> subset = randomSubsetOf(nums);
+	for (int num : subset) {
+		cout << num << endl;
+	}
     return 0;
 }
 
