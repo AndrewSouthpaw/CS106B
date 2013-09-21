@@ -1,11 +1,11 @@
 /*
  * File: UniversalHealthCoverage.cpp
  * ----------------------
- * Name: [TODO: enter name here]
- * Section: [TODO: enter section leader here]
- * This file is the starter project for the UniversalHealthCoverage problem
- * on Assignment #3.
- * [TODO: extend the documentation]
+ * Name: Andrew Smith
+ *
+ * Given a set of cities and hospitals that can cover those cities. 
+ * Determines if it is possible to cover all the cities for a specified
+ * total number of hospitals.
  */
 #include <iostream>
 #include <string>
