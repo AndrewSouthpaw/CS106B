@@ -25,8 +25,12 @@ string scrubInput(string line) {
 
 }
 
+bool testBoolFunction() {
+//	return true;
+}
+
+
 int main() {
-	string result;
-	result += "hello";
-	cout << result << endl;
+	bool b = testBoolFunction();
+	cout << "b is " << b << endl;
 }
