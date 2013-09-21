@@ -1,20 +1,14 @@
 /*
- * File: Problem8_2009_ListMnemonics.cpp
+ * File: Problem1_2009_SetCallbacks.cpp
  * -------------------------------------
- * A Touch-Tone phone has letters mapped to numbers for a phone dial.
- * A business can use a mnemonic of their numbers that spell out a memorable
- * word or set of words.
- * 1 - 
- * 2 - ABC
- * 3 - DEF
- * 4 - GHI
- * 5 - JKL
- * 6 - MNO
- * 7 - PQR
- * 8 - TUV
- * 9 - WXY
- * This file lists all the mnemonics possible given a number combination.
- * Used help from solutions.
+ * Comparison callback for a data structure in an address book.
+ * Set used to store data:
+ * struct entryT {
+ *		string firstName;
+ *		string lastName;
+ *		string phoneNumber;
+ * }
+ * Compares using last name and then first name.
  */
 
 #include <iostream>
@@ -30,81 +24,52 @@ using namespace std;
 
 /* Constants */
 
+/* Structures */
+struct entryT {
+	string firstName;
+	string lastName;
+	string phoneNumber;
+};
 
 /* Function prototypes */
-void listMnemonics(string nums);
-void recurMnemonics(string prefix, string rest);
-string dialpadNumToLetters(char ch);
+int compareEntry(entryT a, entryT b);
 
 
 /* Main program */
 
 int main() {
-
-	while (true) {
-		string nums = getLine("Enter number combination: ");
-		if (nums == "") break;
-		listMnemonics(nums);
+	entryT test1;
+	test1.firstName = "Andrew";
+	test1.lastName = "Smith";
+	entryT test2;
+	test2.firstName = "Bob";
+	test2.lastName = "Willens";
+	entryT test3;
+	test3.firstName = "Zach";
+	test3.lastName = "Bingo";
+	
+	Set<entryT> people(compareEntry);
+	people += test1, test2, test3;
+	for (entryT person : people) {
+		cout << person.firstName << person.lastName << endl;
 	}
+	
 	return 0;
 }
 
 
-/*
- * Function: listMnemonics
- * Usage: listMnemonics(nums);
- * ---------------------------
- * Lists all the mnemonics possible on a Touch-Tone phone mapping given
- * a string of numbers.
- */
+int compareEntry(entryT a, entryT b) {
+	if (a.lastName < b.lastName) return -1;
+	else if (a.lastName > b.lastName) return 1;
+	else if (a.firstName < b.firstName) return -1;
+	else if (a.firstName > b.firstName) return 1;
+	else return 0;
 
-void listMnemonics(string nums) {
-	
-	recurMnemonics("", nums);
-	
 }
 
 
-/*
- * Function: recurMnemonics
- * Usage: recurMnemonics("", nums);
- * --------------------------------
- * Recursively lists the mnemonics possible giving a set of numbers.
- */
-
-void recurMnemonics(string prefix, string rest) {
-	
-	if (rest.length() == 0) {
-		cout << prefix << endl;
-	}
-	else {
-		string options = dialpadNumToLetters(rest[0]);
-		for(int i = 0; i < options.length(); i++) {
-			recurMnemonics(prefix + options[i], rest.substr(1));
-		}
-	}
-}
 
 
-/*
- * Function: dialpadNumToLetters
- * Usage: string options = dialpadNumToLetters(number);
- * ----------------------------------------------------
- * Translates a dialpad number into the set of characters it could represent.
- */
 
-string dialpadNumToLetters(char ch) {
-	switch (ch) {
-			case '0': return "0";
-			case '1': return "1";
-			case '2': return "ABC";
-			case '3': return "DEF";
-			case '4': return "GHI";
-			case '5': return "JKL";
-			case '6': return "MNO";
-			case '7': return "PQRS";
-			case '8': return "TUV";
-			case '9': return "WXYZ";
-		default: error("Invalid number");
-	}
-}
+
+
