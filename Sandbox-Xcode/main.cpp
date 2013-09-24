@@ -59,10 +59,14 @@ Entry *buildList() {
 	return list;
 }
 
-int main() {
-	Entry *n = buildList();
-	printEntry(n);
-	return 42;
+void printList(Entry *list) {
+	for (Entry *cur = list; cur != NULL; cur = cur->next)
+		printEntry(cur);
 }
 
+int main() {
+	Entry *n = getNewEntry();
+	printList(n);
+	return 42;
+}
 
