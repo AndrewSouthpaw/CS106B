@@ -42,8 +42,27 @@ Entry *getNewEntry() {
 	return newOne;
 }
 
+/* because it's a chain, it's easier to get to the front of the list
+ than the back. So we pre-pend when building a list.
+ Two things get modified: the next pointer going to the (now second)
+ element in the list, and the pointer from the list to the new first
+ entry */
+
+Entry *buildList() {
+	Entry *list = NULL;
+	while (true) {
+		Entry *newOne = getNewEntry();
+		if (newOne == NULL) break;
+		newOne->next = list;
+		list = newOne;
+	}
+	return list;
+}
+
 int main() {
-	Entry *n = getNewEntry();
+	Entry *n = buildList();
 	printEntry(n);
 	return 42;
 }
+
+
