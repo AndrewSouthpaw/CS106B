@@ -5,48 +5,45 @@
  */
 
 #include <iostream>
+#include "console.h"
 #include "gwindow.h"
 #include "random.h"
+#include "simpio.h"
 using namespace std;
 
 /* Constants */
-const double MIN_AREA = 10000;
-const double MIN_EDGE = 20;
+
 
 /* Function prototypes */
-void subdivideCanvas(GWindow &gw, double x, double y,
-					 double width, double height);
 
-/* Main program */
 
-int main() {
-	GWindow gw;
-	subdivideCanvas(gw, 0, 0, gw.getWidth(), gw.getHeight());
-	return 0;
+
+struct Entry {
+	string name, phone;
+	Entry *next;
+};
+
+void printEntry(Entry *e) {
+	cout << e->name << " " << e->phone << endl;
 }
 
-/*
- * Function: subdivideCanvas
- * Usage: subdivideCanvas(gw, x, y, width, height);
- * ------------------------------------------------
- * Decomposes rectangular region on canvas recursively by splitting randomly
- * along its larger dimension. Recursion continues until area falls below
- * constant MIN_AREA.
- */
+Entry *getNewEntry() {
+	cout << "Enter name (ENTER to quit): ";
+	string name = getLine();
+	if (name == "") return NULL;
+	
+	Entry *newOne = new Entry;
+	// *newOne.name doesn't work: dot (.) has higher precedence than *
+	// (*newOne).name works. Thus the -> operator simplifies it.
+	newOne->name = name;
+	cout << "Enter phone: ";
+	newOne->phone = getLine();
+	newOne->next = NULL; // no one follows
+	return newOne;
+}
 
-void subdivideCanvas(GWindow &gw, double x, double y,
-					 double width, double height) {
-	if (width * height >= MIN_AREA) {
-		if (width > height) {
-			double mid = randomReal(MIN_EDGE, width - MIN_EDGE);
-			subdivideCanvas(gw, x, y, mid, height);
-			subdivideCanvas(gw, x + mid, y, width - mid, height);
-			gw.drawLine(x + mid, y, x + mid, y + height);
-		} else {
-			double mid = randomReal(MIN_EDGE, height - MIN_EDGE);
-			subdivideCanvas(gw, x, y, width, mid);
-			subdivideCanvas(gw, x, y + mid, width, height - mid);
-			gw.drawLine(x, y + mid, x + width, y + mid);
-		}
-	}
+int main() {
+	Entry *n = getNewEntry();
+	printEntry(n);
+	return 42;
 }
