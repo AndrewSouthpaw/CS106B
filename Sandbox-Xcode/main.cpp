@@ -64,9 +64,34 @@ void printList(Entry *list) {
 		printEntry(cur);
 }
 
+void recursivePrintList(Entry *list) {
+	if (list == NULL) return;
+	printEntry(list);
+	recursivePrintList(list->next);
+}
+
+void recursivePrintListBackwards(Entry *list) {
+	if (list == NULL) return;
+	recursivePrintList(list->next);
+	printEntry(list);
+}
+
+// ^ neat!!
+
+int count(Entry *list) {
+	if (list == NULL) return 0;
+	return 1 + count(list->next);
+}
+
+void deallocate(Entry *list) {
+	if (list != NULL) {
+		deallocate(list->next);
+		delete list;
+	}
+}
+
 int main() {
 	Entry *n = getNewEntry();
 	printList(n);
 	return 42;
 }
-
