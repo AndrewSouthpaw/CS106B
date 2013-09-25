@@ -9,6 +9,8 @@
 #include "gwindow.h"
 #include "random.h"
 #include "simpio.h"
+#include "vector.h"
+#include "queue.h"
 using namespace std;
 
 /* Constants */
@@ -16,82 +18,46 @@ using namespace std;
 
 /* Function prototypes */
 
-
-
-struct Entry {
-	string name, phone;
-	Entry *next;
-};
-
-void printEntry(Entry *e) {
-	cout << e->name << " " << e->phone << endl;
-}
-
-Entry *getNewEntry() {
-	cout << "Enter name (ENTER to quit): ";
-	string name = getLine();
-	if (name == "") return NULL;
+// This one is for Queues... write one for Vectors.
+void merge(Queue<int> &one, Queue<int> &two, Queue<int> &result) {
+	while (!one.isEmpty() && !two.isEmpty()) {
+		if (one.peek() < two.peek()) {
+			result.enqueue(one.dequeue());
+		} else {
+			result.enqueue(two.dequeue());
+		}
+	}
 	
-	Entry *newOne = new Entry;
-	// *newOne.name doesn't work: dot (.) has higher precedence than *
-	// (*newOne).name works. Thus the -> operator simplifies it.
-	newOne->name = name;
-	cout << "Enter phone: ";
-	newOne->phone = getLine();
-	newOne->next = NULL; // no one follows
-	return newOne;
-}
-
-/* because it's a chain, it's easier to get to the front of the list
- than the back. So we pre-pend when building a list.
- Two things get modified: the next pointer going to the (now second)
- element in the list, and the pointer from the list to the new first
- entry */
-
-Entry *buildList() {
-	Entry *list = NULL;
-	while (true) {
-		Entry *newOne = getNewEntry();
-		if (newOne == NULL) break;
-		newOne->next = list;
-		list = newOne;
+	while (!one.isEmpty()) {
+		result.enqueue(one.dequeue());
 	}
-	return list;
-}
-
-void printList(Entry *list) {
-	for (Entry *cur = list; cur != NULL; cur = cur->next)
-		printEntry(cur);
-}
-
-void recursivePrintList(Entry *list) {
-	if (list == NULL) return;
-	printEntry(list);
-	recursivePrintList(list->next);
-}
-
-void recursivePrintListBackwards(Entry *list) {
-	if (list == NULL) return;
-	recursivePrintList(list->next);
-	printEntry(list);
-}
-
-// ^ neat!!
-
-int count(Entry *list) {
-	if (list == NULL) return 0;
-	return 1 + count(list->next);
-}
-
-void deallocate(Entry *list) {
-	if (list != NULL) {
-		deallocate(list->next);
-		delete list;
+	while (!two.isEmpty()) {
+		result.enqueue(two.dequeue());
 	}
 }
 
-int main() {
-	Entry *n = getNewEntry();
-	printList(n);
-	return 42;
+void merge(Vector<int> &one, Vector<int> &two, Vector<int> &result) {
+	int p, p1, p2;
+	p = p1 = p2 = 0;
+	while (p1 < one.size() && p2 < two.size()) {
+		if (one[p1] < two[p2])
+			result[p++] = one[p1++];
+		else
+			result[p++] = two[p2++];
+	}
+	while (p1 < one.size()) result[p++] = one[p1++];
+	while (p2 < two.size()) result[p++] = two[p2++];
 }
+
+void mergeSort(Vector<int> &v) {
+	if (v.size() > 1) {
+		int n1 = v.size()/2;
+		int n2 = v.size() - n1;
+		Vector<int> left = copy(v, 0, n1);		// O(N)
+		Vector<int> right = copy(v, n1, n2);	// O(N)
+		mergeSort(left);
+		mergeSort(right);
+		merge(v, left, right);					// O(N)
+	}
+}
+
