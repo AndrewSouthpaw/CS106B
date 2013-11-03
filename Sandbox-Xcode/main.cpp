@@ -15,6 +15,26 @@
 using namespace std;
 
 
+/* Selection sort */
+
+void swap (int &a, int &b) {
+	int temp = a;
+	a = b;
+	b = temp;
+}
+
+void selectionSort (Vector<int> &arr) {
+	for (int i = 0; i < arr.size() - 1; i++) {
+		int minIndex = i;
+		for (int j = i; j < arr.size() - 1; j++) {
+			if (arr[j] < arr[minIndex])
+				minIndex = j;
+		}
+		swap(arr[i], arr[minIndex]);
+	}
+}
+
+
 
 /* Quicksort! */
 
@@ -47,6 +67,30 @@ void quicksort(Vector<int> &arr, int start, int stop) {
 }
 
 
+void insertionSort(Vector<int> &v) {
+	for (int i = 1; i < v.size(); i++) {
+		int cur = v[i];
+		for (int j = i - 1; j >= 0 && v[j] > cur; j--) {
+			v[j+1] = v[j];
+			v[j] = cur;
+		}
+	}
+}
+
+
+
+int main() {
+	
+	Vector<int> randnumbers;
+	randnumbers += 1, 4, 2, 3, 7, 5, 8;
+
+	insertionSort(randnumbers);
+	for (int num : randnumbers) {
+		cout << num << " ";
+	}
+	cout << endl;
+	return 42;
+}
 
 
 
