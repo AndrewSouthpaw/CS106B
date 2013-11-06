@@ -15,6 +15,36 @@
 using namespace std;
 
 
+
+/* Trees */
+
+struct node {
+	string key;
+	int value;
+	node* left;
+	node* right;
+};
+
+// In order
+void printTree(node *t) {
+	if (t != NULL) {
+		printTree(t->left);
+		cout << t->key << endl;
+		printTree(t->right);
+	}
+}
+
+// Post order
+void freeTree(node *t) {
+	if (t != NULL) {
+		freeTree(t->left);
+		freeTree(t->right);
+		delete t;
+	}
+}
+
+
+
 /* Selection sort */
 
 void swap (int &a, int &b) {
@@ -77,6 +107,39 @@ void insertionSort(Vector<int> &v) {
 	}
 }
 
+void merge(Vector<int> v1, Vector<int> v2, Vector<int> &v) {
+	int p, p1, p2;
+	p = p1 = p2 = 0;
+	while (p1 < v1.size() && p2 < v2.size()) {
+		if (v1[p1] < v2[p2])
+			v[p++] = v1[p1++];
+		else
+			v[p++] = v2[p2++];
+	}
+	while (p1 < v1.size()) v[p++] = v1[p1++];
+	while (p2 < v2.size()) v[p++] = v2[p2++];
+}
+
+void mergeSort(Vector<int> &v) {
+	// Base case: array of size 1 or 0.
+	if (v.size() <= 1) return;
+	
+	// Split into two sub-vectors
+	Vector<int> left, right;
+	for (int i = 0; i < v.size() / 2; i++) {
+		left += v[i];
+	}
+	for (int i = v.size() / 2; i < v.size(); i++) {
+		right += v[i];
+	}
+	
+	// Recursively mergeSort
+	mergeSort(left);
+	mergeSort(right);
+	
+	// Combine together
+	merge(left, right, v);
+}
 
 
 int main() {
@@ -84,7 +147,7 @@ int main() {
 	Vector<int> randnumbers;
 	randnumbers += 1, 4, 2, 3, 7, 5, 8;
 
-	insertionSort(randnumbers);
+	mergeSort(randnumbers);
 	for (int num : randnumbers) {
 		cout << num << " ";
 	}
