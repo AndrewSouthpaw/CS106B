@@ -12,7 +12,11 @@
 #include "vector.h"
 #include "queue.h"
 #include "lexicon.h"
+#include <fstream>
+#include <string>
 using namespace std;
+
+/* Prototypes */
 
 
 
@@ -142,18 +146,36 @@ void mergeSort(Vector<int> &v) {
 }
 
 
-int main() {
-	
-	Vector<int> randnumbers;
-	randnumbers += 1, 4, 2, 3, 7, 5, 8;
 
-	mergeSort(randnumbers);
-	for (int num : randnumbers) {
-		cout << num << " ";
+string promptUserForFile(ifstream& infile, string prompt) {
+	while (true) {
+		cout << prompt;
+		string filename;
+		getline(cin, filename);
+		infile.open(filename.c_str());
+		if (!infile.fail()) return filename;
+		infile.clear();
+		cout << "Unable to open file. Try again." << endl;
+		if (prompt == "") prompt = "Input file: ";
 	}
-	cout << endl;
-	return 42;
 }
+
+
+
+int main() {
+
+	ifstream infile;
+	promptUserForFile(infile, "Input file: ");
+	char ch;
+	while (infile.get(ch)) {
+		cout.put(ch);
+	}
+	infile.close();
+	
+	
+	return 0;
+}
+
 
 
 
