@@ -6,46 +6,15 @@
 
 #include <iostream>
 #include "console.h"
-#include "gwindow.h"
-#include "random.h"
 #include "simpio.h"
 #include "vector.h"
-#include "queue.h"
-#include "lexicon.h"
-#include <fstream>
-#include <string>
+
 using namespace std;
 
 /* Prototypes */
 
 
 
-/* Trees */
-
-struct node {
-	string key;
-	int value;
-	node* left;
-	node* right;
-};
-
-// In order
-void printTree(node *t) {
-	if (t != NULL) {
-		printTree(t->left);
-		cout << t->key << endl;
-		printTree(t->right);
-	}
-}
-
-// Post order
-void freeTree(node *t) {
-	if (t != NULL) {
-		freeTree(t->left);
-		freeTree(t->right);
-		delete t;
-	}
-}
 
 
 
@@ -163,7 +132,7 @@ string promptUserForFile(ifstream& infile, string prompt) {
 
 
 int main() {
-
+	
 	ifstream infile;
 	promptUserForFile(infile, "Input file: ");
 	char ch;
