@@ -11,7 +11,7 @@ using namespace std;
 
 /* Constants */
 
-const int N_DISKS = 5;
+const int N_DISKS = 6;
 
 /* Moves n disks from the start spindle to the destination spindle,
  * using the given spindle as a temporary.

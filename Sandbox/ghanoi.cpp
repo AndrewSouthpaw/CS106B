@@ -64,7 +64,7 @@ const string kDiskBorderColors[] = {
 };
 
 /* Default pause time. */
-const double kPauseTime = 1000;
+const double kPauseTime = 500;
 
 /* Number of steps in the animation. */
 const int kNumAnimationSteps = 50;
