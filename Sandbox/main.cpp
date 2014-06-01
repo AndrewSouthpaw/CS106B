@@ -191,21 +191,41 @@ void readVector(Vector<int> &v, int l, int r) {
 
 int main() {
 	
-	vector<int> myvector;
+//	vector<int> myvector;
+//	vector<int>::iterator it;
+//	myvector.push_back(3);
+//	myvector.push_back(2);
+//	myvector.push_back(6);
+//	
+//	for (it = myvector.begin(); it != myvector.end(); it++)
+//		cout << *it << " ";
+//	cout << endl;
+//	
+//	myvector.erase(myvector.begin(), myvector.end());
+	
+	vector<vector<int> > v;
+	v.resize(5);
+	vector<int> nums;
+	int myints[] = {3,2,6};
+	nums.assign(myints, myints+3);
 	vector<int>::iterator it;
-	myvector.push_back(3);
-	myvector.push_back(2);
-	myvector.push_back(6);
+	int index = 0;
+	v.insert(v.begin()+3, nums);
+	vector<vector<int> >::iterator myItr = v.begin()+2;
+	*myItr = nums;
+	myItr = v.begin()+1;
+	*myItr = nums;
 	
-	for (it = myvector.begin(); it != myvector.end(); it++)
-		cout << *it << " ";
+	for (vector<vector<int> >::iterator itr = v.begin();
+		 itr != v.end();
+		 itr++) {
+		cout << index++ << ": ";
+		for (vector<int>::iterator i = (*itr).begin(); i != itr->end(); i++) {
+			cout << *i << " ";
+		}
+		cout << endl;
+	}
 	cout << endl;
-	
-	myvector.erase(myvector.begin(), myvector.end());
-	
-	
-
-	
 	
 	
 	return 0;
