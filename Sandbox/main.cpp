@@ -8,6 +8,8 @@
 #include <fstream>
 #include <string>
 #include "vector.h"
+#include <vector>
+
 
 
 
@@ -189,11 +191,17 @@ void readVector(Vector<int> &v, int l, int r) {
 
 int main() {
 	
-	Vector<int> v;
-	v += 3, 2, 4, 8, 1, 5, 7, 6;
+	vector<int> myvector;
+	vector<int>::iterator it;
+	myvector.push_back(3);
+	myvector.push_back(2);
+	myvector.push_back(6);
 	
-	quicksort(v, 0, v.size() - 1);
-	readVector(v, 0, v.size());
+	for (it = myvector.begin(); it != myvector.end(); it++)
+		cout << *it << " ";
+	cout << endl;
+	
+	myvector.erase(myvector.begin(), myvector.end());
 	
 	
 
