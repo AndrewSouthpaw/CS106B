@@ -9,6 +9,7 @@
 #include <string>
 #include "vector.h"
 #include <vector>
+#include <stack>
 
 
 
@@ -189,43 +190,75 @@ void readVector(Vector<int> &v, int l, int r) {
 	cout << endl;
 }
 
+struct Node {
+	int id;							// way to check if Node is initialized
+	vector<int> outgoing;			// nodes reachable from this node
+	vector<int> incoming;			// nodes that reach this node
+	bool visited;
+};
+
+
 int main() {
 	
-//	vector<int> myvector;
-//	vector<int>::iterator it;
-//	myvector.push_back(3);
-//	myvector.push_back(2);
-//	myvector.push_back(6);
-//	
-//	for (it = myvector.begin(); it != myvector.end(); it++)
-//		cout << *it << " ";
-//	cout << endl;
-//	
-//	myvector.erase(myvector.begin(), myvector.end());
+	Node myNode1;
+	Node myNode2;
+	myNode2.outgoing = vector<int> (3, 2);
+	Node myNode3;
 	
-	vector<vector<int> > v;
-	v.resize(5);
-	vector<int> nums;
-	int myints[] = {3,2,6};
-	nums.assign(myints, myints+3);
-	vector<int>::iterator it;
-	int index = 0;
-	v.insert(v.begin()+3, nums);
-	vector<vector<int> >::iterator myItr = v.begin()+2;
-	*myItr = nums;
-	myItr = v.begin()+1;
-	*myItr = nums;
+	cout << "1 = 2? " << (myNode1.outgoing == myNode2.outgoing) << endl;
+	cout << "1 = 3? " << (myNode1.outgoing == myNode3.outgoing) << endl;
+	cout << "1 = n? " << (myNode1.outgoing == vector<int>()) << endl;
 	
-	for (vector<vector<int> >::iterator itr = v.begin();
-		 itr != v.end();
-		 itr++) {
-		cout << index++ << ": ";
-		for (vector<int>::iterator i = (*itr).begin(); i != itr->end(); i++) {
-			cout << *i << " ";
-		}
-		cout << endl;
+	vector<Node> nodes;
+	nodes.resize(2);
+	nodes.push_back(myNode2);
+	int i = 0;
+	vector<Node>::iterator it;
+	for (it = nodes.begin(); it != nodes.end(); it++) {
+		if (it->outgoing != vector<int>()) break;
+		i++;
 	}
-	cout << endl;
+	cout << "First initialized: " << i << endl;
+	vector<int> temp = nodes[2].outgoing;
+	i = 0;
+	nodes[1].outgoing = vector<int> (3, 2);
+	for (it = nodes.begin(); it != nodes.end(); it++) {
+		if (it->outgoing != vector<int>()) break;
+		i++;
+	}
+	cout << "First initialized: " << i << endl;
+	
+	bool b1;
+	bool b2 = true;
+	cout << "b1 == b2? " << (b1 == b2) << endl;
+	cout << "b1 != b2? " << (b1 != b2) << endl;
+	cout << "b1 == !b2? " << (b1 == !b2) << endl;
+	
+	
+	
+//	vector<vector<int> > v;
+//	v.resize(5);
+//	vector<int> nums;
+//	int myints[] = {3,2,6};
+//	nums.assign(myints, myints+3);
+//	vector<int>::iterator it;
+//	int index = 0;
+//	v.insert(v.begin()+3, nums);
+//	vector<vector<int> >::iterator myItr = v.begin()+2;
+//	*myItr = nums;
+//	myItr = v.begin()+1;
+//	*myItr = nums;
+//	
+//	for (vector<vector<int> >::iterator itr = v.begin();
+//		 itr != v.end();
+//		 itr++) {
+//		cout << index++ << ": ";
+//		for (vector<int>::iterator i = (*itr).begin(); i != itr->end(); i++) {
+//			cout << *i << " ";
+//		}
+//		cout << endl;
+//	}
+//	cout << endl;
 	
 	
 	return 0;
